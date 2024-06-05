@@ -25,7 +25,7 @@ func SendEmail(subject string, body string) error {
 		"\r\n" +
 		body + "\r\n")
 
-	println(msg)
+	println("message is: ", string(msg))
 	err := smtp.SendMail("smtp.gmail.com:587", auth, emailUsername, to, msg)
 	if err != nil {
 		log.Fatal(err)
