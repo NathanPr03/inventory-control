@@ -54,9 +54,9 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	things, _ := json.Marshal(lowStockProducts)
+	//things, _ := json.Marshal(lowStockProducts)
 
-	err = pkg.SendEmail("Low stock products", fmt.Sprintf("The following products are low in stock: %v", string(things)))
+	err = pkg.SendEmail("Low stock products", fmt.Sprintf("The following products are low in stock: %v", string("some shit")))
 	if err != nil {
 		http.Error(w, "Error sending email: "+err.Error(), http.StatusInternalServerError)
 		return
