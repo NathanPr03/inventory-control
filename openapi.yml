@@ -47,7 +47,7 @@ paths:
       summary: Decrement product stock
       parameters:
         - name: productName
-          in: path
+          in: query
           required: true
           schema:
             type: string
@@ -133,7 +133,7 @@ paths:
                     type: string
   /lowStockProducts:
     get:
-      summary: Get products with less than 10 items in stock
+      summary: Get products with low stock
       responses:
         '200':
           description: Products with low stock
@@ -145,7 +145,12 @@ paths:
                   products:
                     type: array
                     items:
-                      type: string
+                      type: object
+                      properties:
+                        productName:
+                          type: string
+                        remainingStock:
+                          type: integer
         '500':
           description: Internal server error
           content:
