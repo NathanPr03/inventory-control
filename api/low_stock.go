@@ -2,8 +2,11 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"github.com/NathanPr03/price-control/pkg/db"
+	"inventory-control/pkg"
 	"net/http"
+	"time"
 )
 
 type Product struct {
@@ -26,14 +29,24 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 	}
 	defer rows.Close()
 
-	var products []Product
+	var noStockProducts []Product
+	var lowStockProducts []Product
 	for rows.Next() {
 		var product Product
 		if err := rows.Scan(&product.ProductName, &product.RemainingStock); err != nil {
 			http.Error(w, "Error scanning row: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		products = append(products, product)
+		lowStockProducts = append(lowStockProducts, product)
+
+		if product.RemainingStock < 1 {
+			noStockProducts = append(noStockProducts, product)
+		}
+	}
+
+	for _, product := range noStockProducts {
+		_, _ = w.Write([]byte(fmt.Sprintf("Product %s is out of stock\n. Ordering more from central inventory service", product.ProductName)))
+		time.Sleep(10 * time.Millisecond)
 	}
 
 	if err := rows.Err(); err != nil {
@@ -41,7 +54,13 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := map[string][]Product{"products": products}
+	err = pkg.SendEmail("Low stock products", fmt.Sprintf("The following products are low in stock: %v", lowStockProducts))
+	if err != nil {
+		http.Error(w, "Error sending email: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	response := map[string][]Product{"products": lowStockProducts}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(response)
