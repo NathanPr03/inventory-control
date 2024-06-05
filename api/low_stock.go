@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func StockHandler(w http.ResponseWriter, r *http.Request) {
+func LowStock(w http.ResponseWriter, r *http.Request) {
 	dbConnection, err := db.ConnectToDb()
 	if err != nil {
 		http.Error(w, "Error connecting to database: "+err.Error(), http.StatusInternalServerError)
@@ -43,5 +43,5 @@ func StockHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func init() {
-	http.HandleFunc("/lowStockProducts", StockHandler)
+	http.HandleFunc("/lowStockProducts", LowStock)
 }
