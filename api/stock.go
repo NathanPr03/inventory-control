@@ -44,7 +44,4 @@ func StockHandler(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	http.HandleFunc("/lowStockProducts", StockHandler)
-	http.HandleFunc("/incrementStock", IncrementStock)
-	http.HandleFunc("/decrementStock", DecrementStock)
-	http.HandleFunc("/changeStock", ChangeStock)
 }
