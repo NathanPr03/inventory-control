@@ -45,7 +45,7 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, product := range noStockProducts {
-		_, _ = w.Write([]byte(fmt.Sprintf("Product %s is out of stock\n. Ordering more from central inventory service", product.ProductName)))
+		println(fmt.Sprintf("Product %s is out of stock\n. Ordering more from central inventory service", product.ProductName))
 		time.Sleep(10 * time.Millisecond)
 	}
 
