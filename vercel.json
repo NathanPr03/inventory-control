@@ -5,6 +5,9 @@
   ],
   "routes": [
     { "src": "/api/hello", "dest": "/api/index.go"},
-    { "src": "/api/lowStockProducts", "dest": "/api/stock.go"}
+    { "src": "/api/lowStockProducts", "dest": "/api/stock.go"},
+    { "src": "/api/incrementStock", "dest": "/api/stock.go"},
+    { "src": "/api/decrementStock", "dest": "/api/stock.go"},
+    { "src": "/api/changeStock", "dest": "/api/stock.go"}
   ]
 }
