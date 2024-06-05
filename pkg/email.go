@@ -2,7 +2,6 @@ package pkg
 
 import (
 	"github.com/joho/godotenv"
-	"log"
 	"net/smtp"
 	"os"
 )
@@ -25,10 +24,9 @@ func SendEmail(subject string, body string) error {
 		"\r\n" +
 		body + "\r\n")
 
-	println("message is: ", string(msg))
 	err := smtp.SendMail("smtp.gmail.com:587", auth, emailUsername, to, msg)
 	if err != nil {
-		log.Fatal(err)
+		println(err)
 		return err
 	}
 
