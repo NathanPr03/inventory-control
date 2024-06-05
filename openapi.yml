@@ -47,7 +47,7 @@ paths:
       summary: Decrement product stock
       parameters:
         - name: productName
-          in: query
+          in: path
           required: true
           schema:
             type: string
