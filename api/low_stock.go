@@ -18,7 +18,7 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	query := "SELECT product_name, remaining_stock FROM products WHERE remaining_stock < 10"
+	query := "SELECT name, remaining_stock FROM products WHERE remaining_stock < 10"
 	rows, err := dbConnection.Query(query)
 	if err != nil {
 		http.Error(w, "Error querying database: "+err.Error(), http.StatusInternalServerError)
