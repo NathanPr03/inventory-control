@@ -63,6 +63,9 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 
 	response := map[string][]Product{"products": lowStockProducts}
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:4200")
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(response)
 }
