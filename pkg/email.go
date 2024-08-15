@@ -7,7 +7,7 @@ import (
 )
 
 func SendEmail(subject string, body string) error {
-	_ = godotenv.Load("../../.env.development.local")
+	_ = godotenv.Load("../.env.development.local")
 
 	emailUsername := os.Getenv("EMAIL_USERNAME")
 
@@ -18,8 +18,8 @@ func SendEmail(subject string, body string) error {
 		"smtp.gmail.com",
 	)
 
-	to := []string{"doroyi1377@jzexport.com"}
-	msg := []byte("To: doroyi1377@jzexport.com\r\n" +
+	to := []string{"storede04@gmail.com"}
+	msg := []byte("To: storede04@gmail.com\r\n" +
 		"Subject: " + subject +
 		"\r\n" +
 		body + "\r\n")
