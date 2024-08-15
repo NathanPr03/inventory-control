@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/NathanPr03/price-control/pkg/db"
+	"inventory-control/pkg"
 	"net/http"
 	"time"
 )
@@ -53,12 +54,12 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//msg := fmt.Sprintf("Low stock products %v", lowStockProducts)
-	//err = pkg.SendEmail("Low stock products", msg)
-	//if err != nil {
-	//	http.Error(w, "Error sending email: "+err.Error(), http.StatusInternalServerError)
-	//	return
-	//}
+	msg := fmt.Sprintf("Low stock products %v", lowStockProducts)
+	err = pkg.SendEmail("Low stock products", msg)
+	if err != nil {
+		http.Error(w, "Error sending email: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
 	response := map[string][]Product{"products": lowStockProducts}
 	w.Header().Set("Content-Type", "application/json")
