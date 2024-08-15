@@ -54,7 +54,7 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = pkg.SendEmail("Low stock products", prettyPrintProducts(lowStockProducts))
+	err = pkg.SendEmail("Low Stock Products", prettyPrintProducts(lowStockProducts))
 	if err != nil {
 		http.Error(w, "Error sending email: "+err.Error(), http.StatusInternalServerError)
 		return
