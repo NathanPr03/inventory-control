@@ -54,8 +54,7 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	msg := fmt.Sprintf("Low stock products %v", lowStockProducts)
-	err = pkg.SendEmail("Low stock products", msg)
+	err = pkg.SendEmail("Low stock products", prettyPrintProducts(lowStockProducts))
 	if err != nil {
 		http.Error(w, "Error sending email: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -68,6 +67,21 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.WriteHeader(http.StatusOK)
 	_ = json.NewEncoder(w).Encode(response)
+}
+
+func prettyPrintProducts(products []Product) string {
+	var result string
+
+	result += "Low Stock Products:\n"
+	result += "-------------------------------\n"
+	result += fmt.Sprintf("%-20s | %-15s\n", "Product Name", "Remaining Stock")
+	result += "-------------------------------\n"
+	for _, product := range products {
+		result += fmt.Sprintf("%-20s | %-15d\n", product.ProductName, product.RemainingStock)
+	}
+	result += "-------------------------------\n"
+
+	return result
 }
 
 func init() {
