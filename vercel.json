@@ -9,5 +9,11 @@
     { "src": "/api/incrementStock", "dest": "/api/increment_stock.go"},
     { "src": "/api/decrementStock", "dest": "/api/decrement_stock.go"},
     { "src": "/api/changeStock", "dest": "/api/change_stock.go"}
+  ],
+  "crons": [
+    {
+      "path": "/api/lowStockProducts",
+      "schedule": "0 0 * * 1-5"
+    }
   ]
 }
