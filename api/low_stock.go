@@ -6,6 +6,7 @@ import (
 	"github.com/NathanPr03/price-control/pkg/db"
 	"inventory-control/pkg"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -71,15 +72,15 @@ func LowStock(w http.ResponseWriter, r *http.Request) {
 
 func prettyPrintProducts(products []Product) string {
 	var result string
+	tableWidth := 40
 
-	result += "Low Stock Products:\n"
-	result += "-------------------------------\n"
-	result += fmt.Sprintf("%-20s | %-15s\n", "Product Name", "Remaining Stock")
-	result += "-------------------------------\n"
+	result += fmt.Sprintf("%s\n", strings.Repeat("-", tableWidth))
+	result += fmt.Sprintf("| %-18s | %-15s |\n", "Product Name", "Remaining Stock")
+	result += fmt.Sprintf("%s\n", strings.Repeat("-", tableWidth))
 	for _, product := range products {
-		result += fmt.Sprintf("%-20s | %-15d\n", product.ProductName, product.RemainingStock)
+		result += fmt.Sprintf("| %-18s | %-15d |\n", product.ProductName, product.RemainingStock)
 	}
-	result += "-------------------------------\n"
+	result += fmt.Sprintf("%s\n", strings.Repeat("-", tableWidth))
 
 	return result
 }
